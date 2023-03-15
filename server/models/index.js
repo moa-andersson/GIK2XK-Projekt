@@ -43,6 +43,30 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
+// Mikaela gjorde fel
+db.cart.belongsTo(db.user, {
+  allowNull: false,
+  onDelete: "CASCADE",
+});
+db.user.hasMany(db.cart);
+
+db.rating.belongsTo(db.product, {
+  allowNull: false,
+  onDelete: "CASCADE",
+});
+db.product.hasMany(db.rating);
+
+db.cartRow.belongsTo(db.cart, {
+  allowNull: false,
+  onDelete: "CASCADE",
+});
+db.cart.hasMany(db.cartRow);
+
+db.cartRow.belongsTo(db.product, {
+  allowNull: false,
+  onDelete: "CASCADE",
+});
+db.product.hasMany(db.cartRow);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

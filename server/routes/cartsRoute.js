@@ -36,7 +36,7 @@ router.delete("/", (req, res) => {
       where: { id: req.body.id },
     })
     .then(() => {
-      res.json(`Användaren med e-post ${email} togs bort.`);
+      res.json(`Kundvagn togs bort`);
     });
 });
 module.exports = router;

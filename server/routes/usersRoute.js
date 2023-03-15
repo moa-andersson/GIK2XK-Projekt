@@ -1,65 +1,36 @@
 const router = require("express").Router();
-const db = require("../models");
-const validate = require("validate.js");
+const userService = require("../services/userService");
 
-const constraints = {
-  email: {
-    length: {
-      minimum: 4,
-      maximum: 50,
-      tooShort: "^Email-adressen måste vara minst %{count} tecken lång",
-      tooLong: "^Email-adressen får max vara %{count} tecken lång",
-    },
-    email: {
-      message: "Du måste ange en giltlig email-adress",
-    },
-  },
-};
+router.get("/:id", (req, res) => {});
+router.get(":id/cart", (req, res) => {});
+// fortsätt här lektion 3 del 4 7 min in
 
 router.get("/", (req, res) => {
-  db.user.findAll().then((result) => {
-    res.send(result);
+  userService.getAll().then((result) => {
+    res.status(result.status).json(result.data);
   });
 });
 
 router.post("/", (req, res) => {
   const user = req.body;
-  const invalidData = validate(user, constraints);
-
-  if (invalidData) {
-    res.status(400).json(invalidData);
-  } else {
-    db.user.create(user).then((result) => {
-      res.send(result);
-    });
-  }
+  userService.create(user).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 
 router.put("/", (req, res) => {
   const user = req.body;
-  const invalidData = validate(user, constraints);
   const id = user.id;
-  if (invalidData || !id) {
-    res.status(400).json(invalidData || "Id är obligatoriskt");
-  } else {
-    db.user
-      .update(user, {
-        where: { id: user.id },
-      })
-      .then((result) => {
-        res.send(result);
-      });
-  }
+
+  userService.update(user, id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 
 router.delete("/", (req, res) => {
-  const email = req.body.email;
-  db.user
-    .destroy({
-      where: { id: req.body.id },
-    })
-    .then(() => {
-      res.json(`Användaren med e-post ${email} togs bort.`);
-    });
+  const id = req.body.id;
+  userService.destroy(id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 module.exports = router;
