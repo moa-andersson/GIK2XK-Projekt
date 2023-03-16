@@ -1,72 +1,69 @@
 const router = require("express").Router();
 const db = require("../models");
-const validate = require("validate.js");
+const productService = require("../services/productService");
 
-const constraints = {
-  price: {
-    numericality: {
-      float: true,
-      message: "Must be a double.",
-    },
-  },
-  title: {
-    length: {
-      minimum: 1,
-      maximum: 50,
-      tooShort: "^Titlen för produkten måste vara minst %{count} tecken lång",
-      tooLong: "^Titlen får max vara %{count} tecken lång",
-    },
-  },
-  imgUrl: {
-    message: "felaktig sökväg",
-  },
-};
+router.get("/:id", (req, res) => {
+  const id = req.params.id;
+
+  productService.getById(id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
+
+router.post("/:id/addRating", (req, res) => {
+  const rating = req.body;
+  const id = req.params.id;
+
+  productService.addRating(id, rating).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
+
+router.post("/:id/addToCart", (req, res) => {
+  const userId = 2;
+  const productId = req.params.id;
+  const cartRow = req.body;
+
+  productService.addProductToCart(userId, productId, cartRow).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
 
 router.get("/", (req, res) => {
-  db.product.findAll().then((result) => {
-    res.send(result);
+  productService.getAll().then((result) => {
+    res.status(result.status).json(result.data);
   });
 });
 
 router.post("/", (req, res) => {
   const product = req.body;
-  const invalidData = validate(product, constraints);
-
-  if (invalidData) {
-    res.status(400).json(invalidData);
-  } else {
-    db.product.create(product).then((result) => {
-      res.send(result);
-    });
-  }
+  productService.create(product).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 
 router.put("/", (req, res) => {
   const product = req.body;
-  // const invalidData = validate(product, constraints);
   const id = product.id;
-  // if (invalidData || !id) {
-  //   res.status(400).json(invalidData || "Id är obligatoriskt");
-  // } else {
-  db.product
-    .update(product, {
-      where: { id: product.id },
-    })
-    .then((result) => {
-      res.send(result);
-    });
-  // }
+
+  productService.update(product, id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 
 router.delete("/", (req, res) => {
   const id = req.body.id;
-  db.product
-    .destroy({
-      where: { id: id },
-    })
-    .then(() => {
-      res.json(`Produken med id ${id}togs bort.`);
-    });
+  productService.destroy(id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
+
+router.get("/:id/ratings", (req, res) => {
+  const id = req.params.id;
+
+  productService.getProductRatings(id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
 });
 
 module.exports = router;

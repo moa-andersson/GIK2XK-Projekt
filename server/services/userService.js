@@ -15,7 +15,7 @@ const constraints = {
       tooLong: "^Email-adressen får max vara %{count} tecken lång",
     },
     email: {
-      message: "Du måste ange en giltlig email-adress",
+      message: "^Du måste ange en giltlig email-adress",
     },
   },
 };
@@ -28,6 +28,7 @@ async function getAll() {
     return createResponseError(error.status, error.message);
   }
 }
+
 async function create(user) {
   const invalidData = validate(user, constraints);
 
@@ -78,4 +79,29 @@ async function destroy(id) {
   }
 }
 
-module.exports = { getAll, create, update, destroy };
+async function getProductsFromCart(userId, cartId) {
+  if (!userId || !cartId) {
+    return createResponseError(
+      422,
+      "Användar-id kundvagns-id är obligatoriska"
+    ); //överflödig if?
+  }
+  try {
+    var allProductsInCart = [];
+    const cart = await db.cart.findOne({ where: { id: cartId } });
+
+    //kollar om kundkorgen tillhör användaren
+    if (cart.userId == userId) {
+      allProductsInCart = await db.cartRow.findAll({
+        where: { cartId: cartId },
+      });
+    } else {
+      return createResponseError(400, "Inte din kundkorg!");
+    }
+    return createResponseSuccess(allProductsInCart);
+  } catch (error) {
+    return createResponseError(error.status, error.message);
+  }
+}
+
+module.exports = { getProductsFromCart, getAll, create, update, destroy };
