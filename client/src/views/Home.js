@@ -1,5 +1,13 @@
+import "./Home.css";
+import ProductList from "../components/ProductList";
+import { Box } from "@mui/material";
+
 function Home() {
-  return <h2>Alla produkter</h2>;
+  return (
+    <Box p={10}>
+      <ProductList />
+    </Box>
+  );
 }
 
 export default Home;
