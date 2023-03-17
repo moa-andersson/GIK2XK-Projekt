@@ -19,8 +19,9 @@ router.post("/:id/addRating", (req, res) => {
   });
 });
 
-router.post("/:id/addToCart", (req, res) => {
-  const userId = 2;
+router.post("/:id/user/:userId/addToCart", (req, res) => {
+  // lägg till logik för att välja kundvagn som har payed: false
+  const userId = req.params.userId;
   const productId = req.params.id;
   const cartRow = req.body;
 
@@ -35,7 +36,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/create", (req, res) => {
   const product = req.body;
   productService.create(product).then((result) => {
     res.status(result.status).json(result.data);
@@ -50,9 +51,24 @@ router.put("/", (req, res) => {
     res.status(result.status).json(result.data);
   });
 });
+router.put("/:id/update", (req, res) => {
+  const product = req.body;
+  const id = req.params.id;
+
+  productService.update(product, id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
 
 router.delete("/", (req, res) => {
   const id = req.body.id;
+  productService.destroy(id).then((result) => {
+    res.status(result.status).json(result.data);
+  });
+});
+
+router.delete("/:id/delete", (req, res) => {
+  const id = req.params.id;
   productService.destroy(id).then((result) => {
     res.status(result.status).json(result.data);
   });
