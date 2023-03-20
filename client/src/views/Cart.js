@@ -1,6 +1,7 @@
+import CartList from "../components/CartList";
+
 function Cart() {
-  return <h2>Alla produkter i kundvagn</h2>;
+  return <CartList />;
 }
-<h2>Cart</h2>;
 
 export default Cart;

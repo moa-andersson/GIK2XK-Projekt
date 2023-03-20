@@ -22,7 +22,7 @@ function App() {
               <Link to="/"> Home{/* logga */}</Link>
             </Typography>
             <Typography variant="h6" component="div">
-              <Link to="/ProductEdit">Skapa produkt{/* logga */}</Link>
+              <Link to="/products/new">Skapa produkt{/* logga */}</Link>
             </Typography>
             <UserItemSmall />
             <Typography variant="h6" component="div">
@@ -33,14 +33,21 @@ function App() {
       </Box>
       <div>
         <Routes>
-          <Route path="/" element={<Home></Home>}></Route>
+          <Route exact path="/" element={<Home></Home>}></Route>
           <Route
-            path="/ProductDetail"
+            exact
+            path="/products/:id"
             element={<ProductDetail></ProductDetail>}
           ></Route>
-          <Route path="/Cart" element={<Cart></Cart>}></Route>
+          <Route path="/users/:id/cart" element={<Cart></Cart>}></Route>
           <Route
-            path="/ProductEdit"
+            exact
+            path="/products/new"
+            element={<ProductEdit></ProductEdit>}
+          ></Route>
+          <Route
+            exact
+            path="/products/:id/edit"
             element={<ProductEdit></ProductEdit>}
           ></Route>
         </Routes>
