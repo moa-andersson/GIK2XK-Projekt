@@ -98,7 +98,7 @@ function CartList() {
       ratings: [],
     },
     {
-      id: 7,
+      id: 11,
       title: "moamoamoa",
       description: "testar att uppdatera ",
       price: 200,
@@ -137,7 +137,7 @@ function CartList() {
       ],
     },
     {
-      id: 8,
+      id: 12,
       title: "Stickad classisk tröja",
       description:
         "Stickad tröja i marinoull, perfekt för att hålla värmen i kylan. Marinoull är ett av de finaste ullen och du kan förvänta dig riktigt bra kvalite",
@@ -149,7 +149,7 @@ function CartList() {
       ratings: [],
     },
     {
-      id: 9,
+      id: 13,
       title: "Termos, 1L",
       description:
         "Håll drycken varm eller kall med denna fantastiska termos. \nFärg: Grå\nMaterial: Stål ",
@@ -161,7 +161,7 @@ function CartList() {
       ratings: [],
     },
     {
-      id: 10,
+      id: 14,
       title: "Vandringsstav",
       description:
         "Vandringsstaven fungerar nästan som ett extra set ben, förstått på så vis att belastningen på dina knän minskas på upp till 20% – speciellt nedför -, när du använder vandringsstavarna. På väg uppför kan du också komplettera med krafterna i armar och överkropp, så inte allt går ut över benen. ",
@@ -173,17 +173,25 @@ function CartList() {
       ratings: [],
     },
   ];
+
+  //skapar och bygger upp nuvarande kundkorg
+  var cartList = [];
+
+  for (var i = 0; i < cart.length; i++) {
+    for (var j = 0; j < products.length; j++) {
+      if (cart[i].productId == products[j].id) {
+        cartList.push(products[j]);
+      }
+    }
+  }
+
   return (
     <ul>
-      {cart &&
-        cart.map((cart) => (
-          <li key={`cartId_${cart.id}`}>
-            {cart.productId}
-            {cart.id}
-          </li>
+      {cartList &&
+        cartList.map((cartItem) => (
+          <li key={`productId_${cartItem.id}`}>{cartItem.title}</li>
         ))}
     </ul>
   );
 }
-
 export default CartList;
