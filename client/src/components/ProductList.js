@@ -1,8 +1,9 @@
 import { Grid, ListItem } from "@mui/material";
 import { getAll } from "../models/ProductModel";
 import { useEffect, useState } from "react";
+import ProductItemSmall from "./ProductItemSmall";
 
-function ProductList({ pathname }) {
+function ProductList() {
   const products = [
     {
       id: 7,
@@ -165,8 +166,8 @@ function ProductList({ pathname }) {
     >
       {products &&
         products.map((products) => (
-          <Grid item xs={2} sm={4} md={4}>
-            {products.title}
+          <Grid key={`productId_${products.id}`} item xs={6} sm={3} md={3}>
+            <ProductItemSmall products={products} />
           </Grid>
         ))}
     </Grid>

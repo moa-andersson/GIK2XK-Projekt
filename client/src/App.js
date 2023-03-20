@@ -10,6 +10,7 @@ import ProductEdit from "./views/ProductEdit";
 import ProductDetail from "./views/ProductDetail";
 import Cart from "./views/Cart";
 import Home from "./views/Home";
+import UserItemSmall from "./components/UserItemSmall";
 
 function App() {
   return (
@@ -23,9 +24,7 @@ function App() {
             <Typography variant="h6" component="div">
               <Link to="/ProductEdit">Skapa produkt{/* logga */}</Link>
             </Typography>
-            <Typography variant="h6" component="div">
-              Användare
-            </Typography>
+            <UserItemSmall />
             <Typography variant="h6" component="div">
               <Link to="/Cart">Kundvagn</Link>
             </Typography>

@@ -1,5 +1,7 @@
+import ProductItemLarge from "../components/ProductItemLarge";
+
 function ProductDetail() {
-  return <h2>Detalj vy på produkt</h2>;
+  return <ProductItemLarge />;
 }
 
 export default ProductDetail;
