@@ -13,13 +13,16 @@ export async function getAll() {
 }
 
 export async function getOne(id) {
-  const result = await api.get(`/products/${id}/ratings`);
-
-  if (result.status === 200) return result.data;
-  else {
+  console.log("GetOneID: ", id);
+  const result = await api.get(`/products/${id}`);
+  if (result.status === 200) {
+    console.log("SUCCESS!");
+    console.log(result.data);
+    return result.data;
+  } else {
     console.log(result.status);
     console.log(result.data);
-    console.log("Tom array");
+    console.log("FAIL!");
     return [];
   }
 }

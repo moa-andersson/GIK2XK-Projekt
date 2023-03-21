@@ -2,13 +2,13 @@ const router = require("express").Router();
 const db = require("../models");
 const productService = require("../services/productService");
 
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
+// router.get("/:id", (req, res) => {
+//   const id = req.params.id;
 
-  productService.getById(id).then((result) => {
-    res.status(result.status).json(result.data);
-  });
-});
+//   productService.getById(id).then((result) => {
+//     res.status(result.status).json(result.data);
+//   });
+// });
 
 router.post("/:id/addRating", (req, res) => {
   const rating = req.body;
@@ -74,7 +74,7 @@ router.delete("/:id/delete", (req, res) => {
   });
 });
 
-router.get("/:id/ratings", (req, res) => {
+router.get("/:id", (req, res) => {
   const id = req.params.id;
 
   productService.getProductRatings(id).then((result) => {

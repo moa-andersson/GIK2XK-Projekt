@@ -8,7 +8,21 @@ function UserItemSmall() {
     getAll().then((users) => setUsers(users));
   }, []);
 
-  return <div>{users}</div>;
+  let smallUser;
+  if (users[0]) {
+    smallUser = users[0];
+  } else {
+    smallUser = {
+      firstName: "hittades inte",
+      lastName: "hittades inte",
+    };
+  }
+
+  return (
+    <div>
+      {smallUser.firstName} {smallUser.lastName}
+    </div>
+  );
 }
 
 export default UserItemSmall;
