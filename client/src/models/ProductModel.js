@@ -1,9 +1,9 @@
 import api from "../api.js";
 
-export async function getAll(url = "/products") {
-  const result = await api.get(url);
+export async function getAll() {
+  const result = await api.get("/products/");
 
-  if (result.status === 200) return result;
+  if (result.status === 200) return result.data;
   else {
     console.log(result.status);
     console.log(result.data);
@@ -12,7 +12,14 @@ export async function getAll(url = "/products") {
   }
 }
 
-// const [products, setProducts] = useState([]);
-// useEffect(() => {
-//    getAll().then(products => setProducts())
-//}, [])
+export async function getOne(id) {
+  const result = await api.get(`/products/${id}/ratings`);
+
+  if (result.status === 200) return result.data;
+  else {
+    console.log(result.status);
+    console.log(result.data);
+    console.log("Tom array");
+    return [];
+  }
+}

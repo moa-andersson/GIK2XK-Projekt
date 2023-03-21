@@ -1,16 +1,14 @@
+import { useEffect, useState } from "react";
+import { getAll } from "../models/UserModel";
+
 function UserItemSmall() {
-  const users = [
-    {
-      id: 2,
-      firstName: "Moa",
-      lastName: "Andersson",
-      email: "h21moaan@du.se",
-      password: "12345",
-      createdAt: "2023-03-16T14:06:58.000Z",
-      updatedAt: "2023-03-16T14:06:58.000Z",
-    },
-  ];
-  return <div>{`${users[0].firstName} ${users[0].lastName}`}</div>;
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getAll().then((users) => setUsers(users));
+  }, []);
+
+  return <div>{users}</div>;
 }
 
 export default UserItemSmall;
